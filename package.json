@@ -1,17 +1,40 @@
 {
-    "buildNpmdoc":"grunt-contrib-concat",
+    "author": "kai zhu <kaizhu256@gmail.com>",
+    "buildNpmdoc": "grunt-contrib-concat",
+    "description": "api documentation for [grunt-contrib-concat (v1.0.1)](https://github.com/gruntjs/grunt-contrib-concat#readme) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-grunt-contrib-concat.svg)](https://travis-ci.org/npmdoc/node-npmdoc-grunt-contrib-concat)",
     "devDependencies": {
-        "grunt-contrib-concat": "*",
         "electron-lite": "kaizhu256/node-electron-lite#alpha",
+        "grunt-contrib-concat": "*",
         "utility2": "kaizhu256/node-utility2#alpha"
     },
-    "name":"npmdoc-grunt-contrib-concat",
+    "engines": {
+        "node": ">=4.0"
+    },
+    "homepage": "https://github.com/npmdoc/node-npmdoc-grunt-contrib-concat",
+    "keywords": [
+        "documentation",
+        "grunt-contrib-concat"
+    ],
+    "license": "MIT",
+    "main": "lib.npmdoc_grunt_contrib_concat.js",
+    "name": "npmdoc-grunt-contrib-concat",
+    "nameAlias": "npmdoc_grunt_contrib_concat",
+    "nameOriginal": "npmdoc-grunt-contrib-concat",
+    "os": [
+        "darwin",
+        "linux"
+    ],
     "repository": {
         "type": "git",
         "url": "https://github.com/npmdoc/node-npmdoc-grunt-contrib-concat.git"
     },
     "scripts": {
-        "build-ci": "utility2 shReadmeTest build_ci.sh"
+        "build-ci": "utility2 shReadmeTest build_ci.sh",
+        "env": "env",
+        "heroku-postbuild": "(set -e; npm install \"kaizhu256/node-utility2#alpha\"; utility2 shDeployHeroku)",
+        "postinstall": "if [ -f npm_scripts.sh ]; then ./npm_scripts.sh postinstall; fi",
+        "start": "(set -e; export PORT=${PORT:-8080}; utility2 start test.js)",
+        "test": "(set -e; export PORT=$(utility2 shServerPortRandom); utility2 test test.js)"
     },
-    "version": "0.0.1"
+    "version": "0.0.2"
 }
