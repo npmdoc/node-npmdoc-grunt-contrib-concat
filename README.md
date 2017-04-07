@@ -1,11 +1,13 @@
-# api documentation for  [grunt-contrib-concat (v1.0.1)](https://github.com/gruntjs/grunt-contrib-concat#readme)  [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-grunt-contrib-concat.svg)](https://travis-ci.org/npmdoc/node-npmdoc-grunt-contrib-concat)
+# api documentation for  [grunt-contrib-concat (v1.0.1)](https://github.com/gruntjs/grunt-contrib-concat#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-grunt-contrib-concat.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-grunt-contrib-concat) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-grunt-contrib-concat.svg)](https://travis-ci.org/npmdoc/node-npmdoc-grunt-contrib-concat)
 #### Concatenate files.
 
 [![NPM](https://nodei.co/npm/grunt-contrib-concat.png?downloads=true)](https://www.npmjs.com/package/grunt-contrib-concat)
 
-[![apidoc](https://npmdoc.github.io/node-npmdoc-grunt-contrib-concat/build/screen-capture.buildNpmdoc.browser._2Fhome_2Ftravis_2Fbuild_2Fnpmdoc_2Fnode-npmdoc-grunt_contrib_concat_2Ftmp_2Fbuild_2Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-grunt-contrib-concat/build..beta..travis-ci.org/apidoc.html)
+[![apidoc](https://npmdoc.github.io/node-npmdoc-grunt-contrib-concat/build/screenCapture.buildNpmdoc.browser.%2Fhome%2Ftravis%2Fbuild%2Fnpmdoc%2Fnode-npmdoc-grunt-contrib-concat%2Ftmp%2Fbuild%2Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-grunt-contrib-concat/build/apidoc.html)
 
-![package-listing](https://npmdoc.github.io/node-npmdoc-grunt-contrib-concat/build/screen-capture.npmPackageListing.svg)
+![npmPackageListing](https://npmdoc.github.io/node-npmdoc-grunt-contrib-concat/build/screenCapture.npmPackageListing.svg)
+
+![npmPackageDependencyTree](https://npmdoc.github.io/node-npmdoc-grunt-contrib-concat/build/screenCapture.npmPackageDependencyTree.svg)
 
 
 
