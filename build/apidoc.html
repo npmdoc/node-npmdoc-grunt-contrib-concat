@@ -61,12 +61,199 @@
 
     <li class="apidocModuleLi"><a href="#apidoc.module.grunt-contrib-concat">module grunt-contrib-concat</a><ol>
 
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.grunt-contrib-concat.grunt-contrib-concat">
+            function <span class="apidocSignatureSpan"></span>grunt-contrib-concat
+            <span class="apidocSignatureSpan">(grunt)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.grunt-contrib-concat.toString">
+            function <span class="apidocSignatureSpan">grunt-contrib-concat.</span>toString
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.grunt-contrib-concat.toString">module grunt-contrib-concat.toString</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.grunt-contrib-concat.toString.toString">
+            function <span class="apidocSignatureSpan">grunt-contrib-concat.</span>toString
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
     </ol></li>
 
 </ol></div>
 
 <div class="apidocSectionDiv">
 <h1><a href="#apidoc.module.grunt-contrib-concat" id="apidoc.module.grunt-contrib-concat">module grunt-contrib-concat</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.grunt-contrib-concat.grunt-contrib-concat" id="apidoc.element.grunt-contrib-concat.grunt-contrib-concat">
+        function <span class="apidocSignatureSpan"></span>grunt-contrib-concat
+        <span class="apidocSignatureSpan">(grunt)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">grunt-contrib-concat = function (grunt) {
+
+  // Internal lib.
+  var comment = require(&#x27;./lib/comment&#x27;).init(grunt);
+  var chalk = require(&#x27;chalk&#x27;);
+  var sourcemap = require(&#x27;./lib/sourcemap&#x27;).init(grunt);
+
+  grunt.registerMultiTask(&#x27;concat&#x27;, &#x27;Concatenate files.&#x27;, function() {
+    // Merge task-specific and/or target-specific options with these defaults.
+    var options = this.options({
+      separator: grunt.util.linefeed,
+      banner: &#x27;&#x27;,
+      footer: &#x27;&#x27;,
+      stripBanners: false,
+      process: false,
+      sourceMap: false,
+      sourceMapName: undefined,
+      sourceMapStyle: &#x27;embed&#x27;
+    });
+
+    // Normalize boolean options that accept options objects.
+    if (options.stripBanners === true) {
+      options.stripBanners = {};
+    }
+    if (options.process === true) {
+      options.process = {};
+    }
+
+    // Process banner and footer.
+    var banner = grunt.template.process(options.banner);
+    var footer = grunt.template.process(options.footer);
+
+    // Set a local variable for whether to build source maps or not.
+    var sourceMap = options.sourceMap;
+
+    // If content is not embedded and it will be modified, either exit or do
+    // not make the source map.
+    if (
+      sourceMap &#x26;&#x26; options.sourceMapStyle === &#x27;link&#x27; &#x26;&#x26;
+        (options.stripBanners || options.process)
+    ) {
+      // Warn and exit if --force isn&#x27;t set.
+      grunt.warn(
+        &#x27;stripBanners or process option is enabled. &#x27; +
+        &#x27;Set sourceMapStyle option to \&#x27;embed\&#x27; or \&#x27;inline\&#x27;.&#x27;
+      );
+      // --force is set, continue on without the source map.
+      grunt.log.warn(&#x27;Skipping creation of source maps.&#x27;);
+      // Set sourceMap to false to keep maps from being constructed.
+      sourceMap = false;
+    }
+
+    // Iterate over all src-dest file pairs.
+    this.files.forEach(function(f) {
+      // Initialize source map objects.
+      var sourceMapHelper;
+      if (sourceMap) {
+        sourceMapHelper = sourcemap.helper(f, options);
+        sourceMapHelper.add(banner);
+      }
+
+      // Concat banner + specified files + footer.
+      var src = banner + f.src.filter(function(filepath) {
+        // Warn on and remove invalid source files (if nonull was set).
+        if (!grunt.file.exists(filepath)) {
+          grunt.log.warn(&#x27;Source file &#x22;&#x27; + filepath + &#x27;&#x22; not found.&#x27;);
+          return false;
+        }
+        return true;
+      }).map(function(filepath, i) {
+        if (grunt.file.isDir(filepath)) {
+          return;
+        }
+        // Read file source.
+        var src = grunt.file.read(filepath);
+        // Process files as templates if requested.
+        if (typeof options.process === &#x27;function&#x27;) {
+          src = options.process(src, filepath);
+        } else if (options.process) {
+          src = grunt.template.process(src, options.process);
+        }
+        // Strip banners if requested.
+        if (options.stripBanners) {
+          src = comment.stripBanner(src, options.stripBanners);
+        }
+        // Add the lines of this file to our map.
+        if (sourceMapHelper) {
+          src = sourceMapHelper.addlines(src, filepath);
+          if (i &#x3c; f.src.length - 1) {
+            sourceMapHelper.add(options.separator);
+          }
+        }
+        return src;
+      }).join(options.separator) + footer;
+
+      if (sourceMapHelper) {
+        sourceMapHelper.add(footer);
+        sourceMapHelper.write();
+        // Add sourceMappingURL to the end.
+        src += sourceMapHelper.url();
+      }
+
+      // Write the destination file.
+      grunt.file.write(f.dest, src);
+
+      // Print a success message.
+      grunt.verbose.write(&#x27;File &#x27; + chalk.cyan(f.dest) + &#x27; created.&#x27;);
+    });
+  });
+
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.grunt-contrib-concat.toString" id="apidoc.element.grunt-contrib-concat.toString">
+        function <span class="apidocSignatureSpan">grunt-contrib-concat.</span>toString
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">toString = function () {
+    return text;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.grunt-contrib-concat.toString" id="apidoc.module.grunt-contrib-concat.toString">module grunt-contrib-concat.toString</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.grunt-contrib-concat.toString.toString" id="apidoc.element.grunt-contrib-concat.toString.toString">
+        function <span class="apidocSignatureSpan">grunt-contrib-concat.</span>toString
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function toString() { [native code] }</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
 
 </div>
 
