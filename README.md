@@ -1,9 +1,11 @@
 # api documentation for  [grunt-contrib-concat (v1.0.1)](https://github.com/gruntjs/grunt-contrib-concat#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-grunt-contrib-concat.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-grunt-contrib-concat) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-grunt-contrib-concat.svg)](https://travis-ci.org/npmdoc/node-npmdoc-grunt-contrib-concat)
 #### Concatenate files.
 
-[![NPM](https://nodei.co/npm/grunt-contrib-concat.png?downloads=true)](https://www.npmjs.com/package/grunt-contrib-concat)
+[![NPM](https://nodei.co/npm/grunt-contrib-concat.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/grunt-contrib-concat)
 
-[![apidoc](https://npmdoc.github.io/node-npmdoc-grunt-contrib-concat/build/screenCapture.buildNpmdoc.browser.%252Fhome%252Ftravis%252Fbuild%252Fnpmdoc%252Fnode-npmdoc-grunt-contrib-concat%252Ftmp%252Fbuild%252Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-grunt-contrib-concat/build/apidoc.html)
+- [https://npmdoc.github.io/node-npmdoc-grunt-contrib-concat/build/apidoc.html](https://npmdoc.github.io/node-npmdoc-grunt-contrib-concat/build/apidoc.html)
+
+[![apidoc](https://npmdoc.github.io/node-npmdoc-grunt-contrib-concat/build/screenCapture.buildCi.browser.%252Ftmp%252Fbuild%252Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-grunt-contrib-concat/build/apidoc.html)
 
 ![npmPackageListing](https://npmdoc.github.io/node-npmdoc-grunt-contrib-concat/build/screenCapture.npmPackageListing.svg)
 
@@ -118,28 +120,22 @@
     "main": "tasks/concat.js",
     "maintainers": [
         {
-            "name": "cowboy",
-            "email": "cowboy@rj3.net"
+            "name": "cowboy"
         },
         {
-            "name": "tkellen",
-            "email": "tyler@sleekcode.net"
+            "name": "tkellen"
         },
         {
-            "name": "shama",
-            "email": "kyle@dontkry.com"
+            "name": "shama"
         },
         {
-            "name": "vladikoff",
-            "email": "vlad@vladikoff.com"
+            "name": "vladikoff"
         },
         {
-            "name": "sindresorhus",
-            "email": "sindresorhus@gmail.com"
+            "name": "sindresorhus"
         },
         {
-            "name": "jmeas",
-            "email": "jellyes2@gmail.com"
+            "name": "jmeas"
         }
     ],
     "name": "grunt-contrib-concat",
@@ -147,7 +143,6 @@
     "peerDependencies": {
         "grunt": ">=0.4.0"
     },
-    "readme": "ERROR: No README data found!",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/gruntjs/grunt-contrib-concat.git"
@@ -158,16 +153,6 @@
     "version": "1.0.1"
 }
 ```
-
-
-
-# <a name="apidoc.tableOfContents"></a>[table of contents](#apidoc.tableOfContents)
-
-#### [module grunt-contrib-concat](#apidoc.module.grunt-contrib-concat)
-
-
-
-# <a name="apidoc.module.grunt-contrib-concat"></a>[module grunt-contrib-concat](#apidoc.module.grunt-contrib-concat)
 
 
 
