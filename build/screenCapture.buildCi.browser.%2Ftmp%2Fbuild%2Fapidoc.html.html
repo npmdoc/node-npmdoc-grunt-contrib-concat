@@ -65,8 +65,24 @@
 
         <li>
 
-            <a class="apidocElementLiA" href="#apidoc.element.grunt-contrib-concat.toString">
-            function <span class="apidocSignatureSpan">grunt-contrib-concat.</span>toString
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">grunt-contrib-concat.</span>comment</span>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">grunt-contrib-concat.</span>sourcemap</span>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.grunt-contrib-concat.comment">module grunt-contrib-concat.comment</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.grunt-contrib-concat.comment.init">
+            function <span class="apidocSignatureSpan">grunt-contrib-concat.comment.</span>init
             <span class="apidocSignatureSpan">()</span>
             </a>
 
@@ -74,13 +90,13 @@
 
     </ol></li>
 
-    <li class="apidocModuleLi"><a href="#apidoc.module.grunt-contrib-concat.toString">module grunt-contrib-concat.toString</a><ol>
+    <li class="apidocModuleLi"><a href="#apidoc.module.grunt-contrib-concat.sourcemap">module grunt-contrib-concat.sourcemap</a><ol>
 
         <li>
 
-            <a class="apidocElementLiA" href="#apidoc.element.grunt-contrib-concat.toString.toString">
-            function <span class="apidocSignatureSpan">grunt-contrib-concat.</span>toString
-            <span class="apidocSignatureSpan">()</span>
+            <a class="apidocElementLiA" href="#apidoc.element.grunt-contrib-concat.sourcemap.init">
+            function <span class="apidocSignatureSpan">grunt-contrib-concat.sourcemap.</span>init
+            <span class="apidocSignatureSpan">(grunt)</span>
             </a>
 
         </li>
@@ -216,15 +232,48 @@
 
 
 
+
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.grunt-contrib-concat.comment" id="apidoc.module.grunt-contrib-concat.comment">module grunt-contrib-concat.comment</a></h1>
+
+
     <h2>
-        <a href="#apidoc.element.grunt-contrib-concat.toString" id="apidoc.element.grunt-contrib-concat.toString">
-        function <span class="apidocSignatureSpan">grunt-contrib-concat.</span>toString
+        <a href="#apidoc.element.grunt-contrib-concat.comment.init" id="apidoc.element.grunt-contrib-concat.comment.init">
+        function <span class="apidocSignatureSpan">grunt-contrib-concat.comment.</span>init
         <span class="apidocSignatureSpan">()</span>
         </a>
     </h2>
     <ul>
-    <li>description and source-code<pre class="apidocCodePre">toString = function () {
-    return text;
+    <li>description and source-code<pre class="apidocCodePre">init = function () {
+  var exports = {};
+
+  // Return the given source code with any leading banner comment stripped.
+  exports.stripBanner = function(src, options) {
+    if (!options) {
+      options = {};
+    }
+
+    var m = [];
+    if (options.line) {
+      // Strip // ... leading banners.
+      m.push('(?:.*\\/\\/.*\\r?\\n)+\\s*');
+    }
+    if (options.block) {
+      // Strips all /* ... */ block comment banners.
+      m.push('\\/\\*[\\s\\S]*?\\*\\/');
+    } else {
+      // Strips only /* ... */ block comment banners, excluding /*! ... */.
+      m.push('\\/\\*[^!][\\s\\S]*?\\*\\/');
+    }
+    var re = new RegExp('^\\s*(?:' + m.join('|') + ')\\s*', '');
+    return src.replace(re, '');
+  };
+
+  return exports;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -233,17 +282,146 @@
 </div>
 
 <div class="apidocSectionDiv">
-<h1><a href="#apidoc.module.grunt-contrib-concat.toString" id="apidoc.module.grunt-contrib-concat.toString">module grunt-contrib-concat.toString</a></h1>
+<h1><a href="#apidoc.module.grunt-contrib-concat.sourcemap" id="apidoc.module.grunt-contrib-concat.sourcemap">module grunt-contrib-concat.sourcemap</a></h1>
 
 
     <h2>
-        <a href="#apidoc.element.grunt-contrib-concat.toString.toString" id="apidoc.element.grunt-contrib-concat.toString.toString">
-        function <span class="apidocSignatureSpan">grunt-contrib-concat.</span>toString
-        <span class="apidocSignatureSpan">()</span>
+        <a href="#apidoc.element.grunt-contrib-concat.sourcemap.init" id="apidoc.element.grunt-contrib-concat.sourcemap.init">
+        function <span class="apidocSignatureSpan">grunt-contrib-concat.sourcemap.</span>init
+        <span class="apidocSignatureSpan">(grunt)</span>
         </a>
     </h2>
     <ul>
-    <li>description and source-code<pre class="apidocCodePre">function toString() { [native code] }</pre></li>
+    <li>description and source-code<pre class="apidocCodePre">init = function (grunt) {
+  var exports = {};
+
+  // Node first party libs
+  var path = require('path');
+
+  // Third party libs
+  var chalk = require('chalk');
+  var SourceMap = require('source-map');
+  var SourceMapConsumer = SourceMap.SourceMapConsumer;
+  var SourceMapGenerator = SourceMap.SourceMapGenerator;
+
+  var NO_OP = function(){};
+
+  function SourceMapConcatHelper(options) {
+    this.files = options.files;
+    this.dest = options.dest;
+    this.options = options.options;
+    this.line = 1;
+    this.column = 0;
+
+    // ensure we're using forward slashes, because these are URLs
+    var file = path.relative(path.dirname(this.dest), this.files.dest).replace(/\\/g, '/');
+    var generator = new SourceMapGenerator({
+      file: file
+    });
+    this.file = file;
+    this.generator = generator;
+    this.addMapping = function(genLine, genCol, orgLine, orgCol, source, name) {
+      if (!source) {
+        generator.addMapping({
+          generated: {line: genLine, column: genCol}
+        });
+      } else {
+        if (!name) {
+          generator.addMapping({
+            generated: {line: genLine, column: genCol},
+            original: {line: orgLine, column: orgCol},
+            source: source
+          });
+        } else {
+          generator.addMapping({
+            generated: {line: genLine, column: genCol},
+            original: {line: orgLine, column: orgCol},
+            source: source,
+            name: name
+          });
+        }
+      }
+    };
+  }
+
+  // Return an object that is used to track sourcemap data between calls.
+  exports.helper = function(files, options) {
+    // Figure out the source map destination.
+    var dest = files.dest;
+    if (options.sourceMapStyle === 'inline') {
+      // Leave dest as is. It will be used to compute relative sources.
+    } else if (typeof options.sourceMapName === 'string') {
+      dest = options.sourceMapName;
+    } else if (typeof options.sourceMapName === 'function') {
+      dest = options.sourceMapName(dest);
+    } else {
+      dest += '.map';
+    }
+
+    // Inline style and sourceMapName together doesn't work
+    if (options.sourceMapStyle === 'inline' &amp;&amp; options.sourceMapName) {
+      grunt.log.warn(
+        'Source map will be inlined, sourceMapName option ignored.'
+      );
+    }
+
+    return new SourceMapConcatHelper({
+      files: files,
+      dest: dest,
+      options: options
+    });
+  };
+
+  // Parse only to increment the generated file's column and line count
+  SourceMapConcatHelper.prototype.add = function(src) {
+    this._forEachTokenPosition(src);
+  };
+
+<span class="apidocCodeCommentSpan">  /**
+   * Parse the source file into tokens and apply the provided callback
+   * with the position of the token boundaries in the original file, and
+   * in the generated file.
+   *
+   * @param src The sources to tokenize. Required
+   * @param filename The name of the source file. Optional
+   * @param callback What to do with the token position indices. Optional
+   */
+</span>  SourceMapConcatHelper.prototype._forEachTokenPosition = function(src, filename, callback) {
+    var genLine = this.line;
+    var genCol = this.column;
+    var orgLine = 1;
+    var orgCol = 0;
+    // Tokenize on words, new lines, and white space.
+    var tokens = src.split(/(\n|[^\S\n]+|\b)/g);
+    if (!callback) {
+      callback = NO_OP;
+    }
+    for (var i = 0, len = tokens.length; i &lt; len; i++) {
+      var token = tokens[i];
+      if (token) {
+        // The if statement filters out empty strings.
+        callback(genLine, genCol, orgLine, orgCol, filename);
+        if (token === '\n') {
+          ++orgLine;
+          ++genLine;
+          orgCol = 0;
+          genCol = 0;
+        } else {
+          orgCol += token.length;
+          genCol += token.length;
+        }
+      }
+    }
+
+    this.line = genLine;
+    this.column = genCol;
+  };
+
+  // Add the lines of a given file to the sourcemap. If in the file, store a
+  // prior sourcemap and return src with sourceMappingURL removed.
+  SourceMapConcatHelper.prototype.addlines = function(src, filename) {
+    var sourceMapRegEx = /\n\/[*/][@#]\s+sourceMappingURL=((?:(?!\s+\*\/).)*).*/;
+    var relativeFilena ...</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
 
