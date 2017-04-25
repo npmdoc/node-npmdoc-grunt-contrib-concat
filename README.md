@@ -1,4 +1,7 @@
-# api documentation for  [grunt-contrib-concat (v1.0.1)](https://github.com/gruntjs/grunt-contrib-concat#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-grunt-contrib-concat.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-grunt-contrib-concat) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-grunt-contrib-concat.svg)](https://travis-ci.org/npmdoc/node-npmdoc-grunt-contrib-concat)
+# npmdoc-grunt-contrib-concat
+
+#### basic api documentation for  [grunt-contrib-concat (v1.0.1)](https://github.com/gruntjs/grunt-contrib-concat#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-grunt-contrib-concat.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-grunt-contrib-concat) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-grunt-contrib-concat.svg)](https://travis-ci.org/npmdoc/node-npmdoc-grunt-contrib-concat)
+
 #### Concatenate files.
 
 [![NPM](https://nodei.co/npm/grunt-contrib-concat.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/grunt-contrib-concat)
@@ -150,7 +153,8 @@
     "scripts": {
         "test": "grunt test"
     },
-    "version": "1.0.1"
+    "version": "1.0.1",
+    "bin": {}
 }
 ```
 
